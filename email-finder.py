@@ -1,3 +1,6 @@
+# A program that will take an internet domain name and print out a list of the email addresses that were found on that website
+# Author: Basileal Imana
+
 import re, urllib
 from bs4 import BeautifulSoup
 import urlparse
@@ -11,8 +14,7 @@ def get_file(url):
 		html = html_file.read()
 		return html
 	except IOError:
-		print "Unable to make connection. Try again..."
-		quit()
+		return ""
 		
 # Gets all email addresses in a html string, returns a set to remove duplicates
 def get_emails(html):
@@ -35,7 +37,7 @@ def get_links(html, base_url):
 		new_url = urlparse.urljoin(base_url, l)
 
 		# parse the full url
-		o = urlparse.urlsplit(new_url)
+		o = urlparse.urlparse(new_url)
 
 		# parse base_url to get domain
 		d = urlparse.urlparse(base_url)
@@ -64,7 +66,7 @@ def run():
 	# get arguments
 	args = arg_parser()
 	base_url = "http://" + args.domain_name
-	depth_max = args.d
+	depth_max = int(args.d)
 	output = args.o
 
 	# initializes queue and set of emails and links

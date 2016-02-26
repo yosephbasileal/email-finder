@@ -9,3 +9,4 @@ Maximum depth of search can be specified by using `-d` option. Default maximum d
 # Requirements
 - Python 2.7.6
 - Beautiful Soup 4.4.1
+- [dryscrape 0.8](http://dryscrape.readthedocs.org/en/latest/installation.html)

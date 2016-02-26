@@ -1,19 +1,24 @@
 # A program that will take an internet domain name and print out a list of the email addresses that were found on that website
 # Author: Basileal Imana
 
-import re, urllib
+import re
 from bs4 import BeautifulSoup
 import urlparse
 import Queue
 import argparse
 
+import dryscrape
+
+
+
 # Attemps to connect to a webpage and download html
 def get_file(url):
 	try:
-		html_file = urllib.urlopen(url)
-		html = html_file.read()
-		return html
-	except IOError:
+		session = dryscrape.Session()
+		session.visit(url)
+		response = session.body()
+		return response
+	except:
 		return ""
 		
 # Gets all email addresses in a html string, returns a set to remove duplicates
@@ -27,7 +32,6 @@ def get_links(html, base_url):
 	links = set() # use a set to avoid duplicates
 	s = BeautifulSoup(html, "html.parser")
 	a = s.find_all('a')
-
 	# for each 'a' html element found
 	for link in a:
 		# get link address
